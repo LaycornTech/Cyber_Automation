@@ -1,0 +1,11 @@
+id 63815
+opcode QUERY
+rcode NOERROR
+flags QR RD RA
+;QUESTION
+youtube.com. IN A
+;ANSWER
+youtube.com. 70 IN A 142.251.216.110
+;AUTHORITY
+;ADDITIONAL
+=======================================

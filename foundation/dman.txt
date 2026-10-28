@@ -1,0 +1,1 @@
+ns1.google.com. dns-admin.google.com. 997807005 900 900 1800 60

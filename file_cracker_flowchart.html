@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>PDF Password Checker - Code Flowchart</title>
+<style>
+@page { size: A3 landscape; margin: 0; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; font-family: Arial, sans-serif; color: #172b4d; }
+.page { width: 420mm; height: 297mm; padding: 12mm 14mm; page-break-after: always; overflow: hidden; }
+.page:last-child { page-break-after: auto; }
+h1 { margin: 0 0 2mm; font-size: 22pt; color: #163b68; }
+.subtitle { margin: 0 0 4mm; color: #52677f; font-size: 10pt; }
+svg { display: block; width: 100%; height: 250mm; }
+.connector { fill: none; stroke: #536b85; stroke-width: 3; marker-end: url(#arrow); }
+.loop { fill: none; stroke: #536b85; stroke-width: 3; marker-end: url(#arrow); }
+svg[aria-label="Password-checking flowchart"] .connector,
+svg[aria-label="Password-checking flowchart"] .loop { marker-end: url(#arrow2); }
+.node { fill: #edf5ff; stroke: #3973ac; stroke-width: 3; }
+.decision { fill: #fff4d6; stroke: #c48a18; stroke-width: 3; }
+.terminal { fill: #e7f5eb; stroke: #328451; stroke-width: 3; }
+.error { fill: #fff0ef; stroke: #b94b45; stroke-width: 3; }
+.helper { fill: #f4efff; stroke: #7553a6; stroke-width: 3; }
+.label { font-size: 22px; font-weight: 600; text-anchor: middle; fill: #172b4d; }
+.small { font-size: 18px; font-weight: 400; }
+.branch { font-size: 18px; font-weight: 700; fill: #52677f; }
+.note { font-size: 17px; fill: #52677f; }
+</style>
+</head>
+<body>
+<section class="page">
+<h1>PDF Password Checker — Main Flow</h1>
+<p class="subtitle">Control flow from command-line arguments through candidate selection to the final result.</p>
+<svg viewBox="0 0 1600 990" role="img" aria-label="Main flowchart">
+<defs>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+<path d="M0,0 L10,5 L0,10 Z" fill="#536b85"/>
+</marker>
+</defs>
+<path class="connector" d="M800 91 V126"/>
+<path class="connector" d="M800 196 V225"/>
+<path class="connector" d="M700 274 H495 V326"/>
+<path class="connector" d="M900 274 H1195 V325"/>
+<path class="connector" d="M495 394 V425"/>
+<path class="connector" d="M1195 390 V424"/>
+<path class="connector" d="M1160 490 V510"/>
+<path class="connector" d="M1305 370 H1460 V510"/>
+<path class="connector" d="M495 490 V585 H800 V623"/>
+<path class="connector" d="M1160 576 V585 H800"/>
+<path class="connector" d="M1410 568 V592"/>
+<path class="connector" d="M800 693 V732"/>
+<path class="connector" d="M800 806 V844"/>
+<path class="connector" d="M700 890 H510 V927"/>
+<path class="connector" d="M900 890 H1090 V927"/>
+<ellipse class="terminal" cx="800" cy="65" rx="105" ry="27"/>
+<text class="label" x="800" y="73">Start</text>
+<rect class="node" x="585" y="126" width="430" height="70" rx="12"/>
+<text class="label" x="800" y="169">Parse command-line arguments</text>
+<polygon class="decision" points="800,220 915,274 800,328 685,274"/>
+<text class="label" x="800" y="270"><tspan x="800">--generate</tspan><tspan x="800" dy="24">specified?</tspan></text>
+<text class="branch" x="552" y="262">Yes</text>
+<text class="branch" x="1050" y="262">No</text>
+<rect class="node" x="315" y="326" width="360" height="68" rx="12"/>
+<text class="label" x="495" y="354"><tspan x="495">Generate candidates from</tspan><tspan x="495" dy="24">characters and length range</tspan></text>
+<rect class="node" x="315" y="425" width="360" height="65" rx="12"/>
+<text class="label" x="495" y="452"><tspan x="495">Count candidates by</tspan><tspan x="495" dy="23">generating them again</tspan></text>
+<polygon class="decision" points="1195,320 1305,370 1195,420 1085,370"/>
+<text class="label" x="1195" y="366"><tspan x="1195">Wordlist</tspan><tspan x="1195" dy="23">provided?</tspan></text>
+<text class="branch" x="1160" y="414">Yes</text>
+<text class="branch" x="1370" y="465">No</text>
+<rect class="node" x="1010" y="424" width="300" height="66" rx="12"/>
+<text class="label" x="1160" y="451"><tspan x="1160">Load wordlist lines</tspan><tspan x="1160" dy="23">as candidates</tspan></text>
+<rect class="node" x="1010" y="510" width="300" height="66" rx="12"/>
+<text class="label" x="1160" y="537"><tspan x="1160">Count entries by</tspan><tspan x="1160" dy="23">reading wordlist again</tspan></text>
+<rect class="error" x="1330" y="510" width="260" height="82" rx="12"/>
+<text class="label small" x="1460" y="540"><tspan x="1460">Print usage message</tspan><tspan x="1460" dy="22">and exit with status 1</tspan></text>
+<rect class="node" x="575" y="623" width="450" height="70" rx="12"/>
+<text class="label" x="800" y="652"><tspan x="800">Call decrypt_pdf(</tspan><tspan x="800" dy="24">PDF, candidate count, candidates, workers)</tspan></text>
+<rect class="node" x="570" y="732" width="460" height="74" rx="12"/>
+<text class="label" x="800" y="761"><tspan x="800">Receive decrypted_password</tspan><tspan x="800" dy="24">from password-checking routine</tspan></text>
+<polygon class="decision" points="800,838 915,890 800,942 685,890"/>
+<text class="label" x="800" y="897">Password found?</text>
+<text class="branch" x="535" y="880">Yes</text>
+<text class="branch" x="1045" y="880">No</text>
+<rect class="terminal" x="310" y="927" width="400" height="56" rx="12"/>
+<text class="label small" x="510" y="961">Print the found password</text>
+<rect class="error" x="890" y="927" width="400" height="56" rx="12"/>
+<text class="label small" x="1090" y="961">Print “Password not found”</text>
+</svg>
+</section>
+<section class="page">
+<h1>Password-Checking Flow</h1>
+<p class="subtitle">Details of <code>decrypt_pdf</code> and <code>try_password</code>; this is the path called from the main flow.</p>
+<svg viewBox="0 0 1600 990" role="img" aria-label="Password-checking flowchart">
+<defs>
+<marker id="arrow2" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+<path d="M0,0 L10,5 L0,10 Z" fill="#536b85"/>
+</marker>
+</defs>
+<path class="connector" d="M800 91 V125" marker-end="url(#arrow2)"/>
+<path class="connector" d="M800 195 V225" marker-end="url(#arrow2)"/>
+<path class="connector" d="M800 295 V330" marker-end="url(#arrow2)"/>
+<path class="connector" d="M800 402 V440" marker-end="url(#arrow2)"/>
+<path class="connector" d="M700 365 H440 V420" marker-end="url(#arrow2)"/>
+<path class="connector" d="M900 365 H1100 V475 H1025" marker-end="url(#arrow2)"/>
+<path class="connector" d="M800 510 V535" marker-end="url(#arrow2)"/>
+<path class="connector" d="M700 580 H465 V625" marker-end="url(#arrow2)"/>
+<path class="connector" d="M900 580 H1135 V625" marker-end="url(#arrow2)"/>
+<path class="connector" d="M465 695 V735" marker-end="url(#arrow2)"/>
+<path class="loop" d="M465 795 H250 V365 H685" marker-end="url(#arrow2)"/>
+<path class="connector" d="M1135 695 V750" marker-end="url(#arrow2)"/>
+<ellipse class="terminal" cx="800" cy="65" rx="130" ry="27"/>
+<text class="label" x="800" y="73">decrypt_pdf starts</text>
+<rect class="node" x="555" y="125" width="490" height="70" rx="12"/>
+<text class="label" x="800" y="153"><tspan x="800">Create progress bar and</tspan><tspan x="800" dy="24">ThreadPoolExecutor</tspan></text>
+<rect class="node" x="525" y="225" width="550" height="70" rx="12"/>
+<text class="label" x="800" y="253"><tspan x="800">Submit try_password(PDF, candidate)</tspan><tspan x="800" dy="24">for every candidate</tspan></text>
+<polygon class="decision" points="800,330 915,365 800,402 685,365"/>
+<text class="label small" x="800" y="371">More futures?</text>
+<text class="branch" x="600" y="355">No</text>
+<text class="branch" x="975" y="355">Yes</text>
+<rect class="error" x="220" y="420" width="440" height="80" rx="12"/>
+<text class="label small" x="440" y="450"><tspan x="440">Print unable to decrypt;</tspan><tspan x="440" dy="23">return None</tspan></text>
+<rect class="helper" x="575" y="440" width="450" height="70" rx="12"/>
+<text class="label" x="800" y="468"><tspan x="800">Wait for next future.result()</tspan><tspan x="800" dy="24">from submission order</tspan></text>
+<polygon class="decision" points="800,535 900,580 800,625 700,580"/>
+<text class="label small" x="800" y="586"><tspan x="800">PDF opens with</tspan><tspan x="800" dy="22">this password?</tspan></text>
+<rect class="error" x="245" y="625" width="440" height="70" rx="12"/>
+<text class="label" x="465" y="653"><tspan x="465">PasswordError caught;</tspan><tspan x="465" dy="24">try_password returns None</tspan></text>
+<rect class="terminal" x="935" y="625" width="400" height="70" rx="12"/>
+<text class="label" x="1135" y="653"><tspan x="1135">Print found password;</tspan><tspan x="1135" dy="24">return candidate</tspan></text>
+<text class="branch" x="590" y="566">No</text>
+<text class="branch" x="1000" y="566">Yes</text>
+<rect class="node" x="245" y="735" width="440" height="60" rx="12"/>
+<text class="label small" x="465" y="772">Update progress; continue to next future</text>
+<ellipse class="terminal" cx="1135" cy="750" rx="175" ry="28"/>
+<text class="label small" x="1135" y="756">Return found password to caller</text>
+<text class="note" x="80" y="870">Candidates run in worker threads, but results are consumed in submission order.</text>
+<text class="note" x="80" y="895">The first truthy result ends the loop; otherwise all futures are checked.</text>
+<text class="note" x="80" y="920">Only pikepdf PasswordError is converted to None; other exceptions propagate.</text>
+<text class="note" x="80" y="945">The supplied snapshot redacts the pikepdf.open password argument, so that line is incomplete as shown.</text>
+</svg>
+</section>
+</body>
+</html>
